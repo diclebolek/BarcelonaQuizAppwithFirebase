@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Firebase SDK'ları -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAad_QQAqJCCs3upB-PhhibrW716I2M3UE",
+      authDomain: "barcelona-quiz-9cad5.firebaseapp.com",
+      projectId: "barcelona-quiz-9cad5",
+      storageBucket: "barcelona-quiz-9cad5.firebasestorage.app",
+      messagingSenderId: "899209037052",
+      appId: "1:899209037052:web:9312eb12f346ee1f674379",
+      measurementId: "G-EZRGCCS0Y1"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barcelona Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <div class="container" style="position: relative;">
+    <img src="barcelona.png" alt="Barcelona Logo" class="logo" />
+
+    <!-- Başlangıç Ekranı -->
+    <div id="start-screen">
+      <h2>Hoşgeldin😊 Lütfen adını gir:</h2>
+      <input type="text" id="username-input" placeholder="Adınız..." />
+      <button id="start-quiz-btn" class="username-btn" disabled>Başla</button>
+    </div>
+
+    <!-- Quiz Alanı -->
+    <div id="quiz-container" class="hidden">
+      <div id="question-number"></div>
+      <div id="question"></div>
+      <div id="question-image" style="margin:15px 0;"></div>
+      <div id="options"></div>
+
+      <div class="buttons">
+        <button id="startMusicBtn">Müziği Başlat</button>
+        <button onclick="useFiftyFifty()" id="fiftyBtn">🔀 Yarı Yarıya</button>
+        <div id="fifty-description" style="margin-top:5px; font-size:12px; color:#bbb; text-align:center; max-width:150px; margin-left:auto; margin-right:auto;">
+        </div>
+        <button onclick="useDoubleChance()" id="doubleBtn">🔁 Çift Cevap</button>
+        <button onclick="skipQuestion()" id="skipBtn">⏭️ Soru Atla</button>
+      </div>
+
+      <div id="timer"></div>
+      <div id="progress-bar"><div id="progress"></div></div>
+    </div>
+
+    <!-- Sonuç Alanı -->
+    <div id="result" class="hidden"></div>
+
+    <!-- Kullanıcı Skor Tablosu -->
+    <div id="user-results" class="results-box" style="max-width: 600px; margin: 30px auto 0 auto;">
+      <h3 style="color:#fff; font-family: 'Montserrat', sans-serif; font-weight:700; display:flex; justify-content:space-between; padding:0 12px;">
+        <span>🎯 Yarışan Kullanıcılar</span>
+        <span>🎁 Seçilen Hediye</span>
+      </h3>
+      <ul id="results-list" style="list-style:none; padding:0; margin:0;"></ul>
+    </div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // Müzik başlat/durdur
+    const music = document.getElementById("bg-music");
+    document.getElementById("startMusicBtn").addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        document.getElementById("startMusicBtn").textContent = "Müziği Durdur";
+      } else {
+        music.pause();
+        document.getElementById("startMusicBtn").textContent = "Müziği Başlat";
+      }
+    });
+  </script>
+
+</body>
+</html>
